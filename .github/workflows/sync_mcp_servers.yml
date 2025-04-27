@@ -1,75 +1,98 @@
-name: Sync MCP Servers
+# .github/workflows/sync_mcp_servers.yml
+
+name: Sync MCP Servers (同步 MCP 服务器列表)
 
 on:
   push:
     branches:
-      - main
+      - main # 当 main 分支有推送时触发
   schedule:
-    - cron: '0 0 * * *'
+    - cron: '0 0 * * *' # 每天 UTC 时间 0 点定时触发 (北京时间早上8点)
 
 jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout (签出代码)
         uses: actions/checkout@v3
         with:
-          # 使用 PAT 检出，以便后续可以推送
+          # 使用 PAT 检出，以便后续可以推送更改
+          # 需要在仓库的 Secrets 中配置名为 PAT 的 Personal Access Token
           token: ${{ secrets.PAT }}
+          # 如果仓库本身包含子模块，并且你也想更新它们，可能需要设置 submodules: true
+          # submodules: true # 在这个场景下不需要，因为我们是手动"同步"内容
 
-      - name: Set up Git
+      - name: Set up Git (设置 Git 配置)
         run: |
           git config user.name "GitHub Actions Bot"
-          # 建议不要在公共代码中留空邮箱，即使是 Actions
-          # 可以使用 GitHub Actions 提供的默认邮箱
-          git config user.email "actions@github.com"
+          # 使用 GitHub Actions 提供的默认邮箱地址
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-      - name: Sync modelcontextprotocol/servers
+      - name: Sync modelcontextprotocol/servers (同步 modelcontextprotocol/servers)
         run: |
-          # 删除旧目录（如果存在）
-          rm -rf @modelcontextprotocol/servers
-          # 创建父目录
-          mkdir -p @modelcontextprotocol
-          # 克隆到新路径
-          git clone --depth 1 https://github.com/modelcontextprotocol/servers.git @modelcontextprotocol/servers
-          # 添加新路径
-          git add @modelcontextprotocol/servers
-          # 提交（如果 add 成功且有变化）
-          git commit -m "chore: sync modelcontextprotocol/servers repository to @modelcontextprotocol/servers" || echo "No changes to commit for modelcontextprotocol/servers"
+          TARGET_DIR="@modelcontextprotocol/servers" # 定义目标目录变量
+          echo "同步 modelcontextprotocol/servers 到 $TARGET_DIR"
+          # 删除旧目录（如果存在），避免冲突
+          rm -rf "$TARGET_DIR"
+          # 创建父目录，确保 @modelcontextprotocol 存在
+          mkdir -p "$(dirname "$TARGET_DIR")"
+          # 克隆最新代码 (只克隆最后一次提交，加快速度)
+          git clone --depth 1 https://github.com/modelcontextprotocol/servers.git "$TARGET_DIR"
+          # !!! 关键步骤：删除克隆下来的仓库的 .git 目录 !!!
+          # 这样 git add 添加的就是文件内容，而不是子模块引用
+          rm -rf "$TARGET_DIR/.git"
+          # 添加新克隆的内容到暂存区
+          git add "$TARGET_DIR"
+          # 提交更改（如果 git add 确实添加了新内容或更改）
+          # 使用 || echo "..." 避免在没有更改时报错退出
+          git commit -m "chore: 同步 modelcontextprotocol/servers 仓库内容到 $TARGET_DIR" || echo "无需提交：modelcontextprotocol/servers 没有变化"
 
-      - name: Sync punkpeye/awesome-mcp-servers
+      - name: Sync punkpeye/awesome-mcp-servers (同步 punkpeye/awesome-mcp-servers)
         run: |
-          rm -rf @punkpeye/awesome-mcp-servers
-          mkdir -p @punkpeye
-          # 添加 --depth 1 可以加快克隆速度，如果不需要完整历史记录
-          git clone --depth 1 https://github.com/punkpeye/awesome-mcp-servers.git @punkpeye/awesome-mcp-servers
-          git add @punkpeye/awesome-mcp-servers
-          git commit -m "chore: sync punkpeye/awesome-mcp-servers repository to @punkpeye/awesome-mcp-servers" || echo "No changes to commit for punkpeye/awesome-mcp-servers"
+          TARGET_DIR="@punkpeye/awesome-mcp-servers"
+          echo "同步 punkpeye/awesome-mcp-servers 到 $TARGET_DIR"
+          rm -rf "$TARGET_DIR"
+          mkdir -p "$(dirname "$TARGET_DIR")"
+          git clone --depth 1 https://github.com/punkpeye/awesome-mcp-servers.git "$TARGET_DIR"
+          # 删除克隆仓库的 .git 目录
+          rm -rf "$TARGET_DIR/.git"
+          git add "$TARGET_DIR"
+          git commit -m "chore: 同步 punkpeye/awesome-mcp-servers 仓库内容到 $TARGET_DIR" || echo "无需提交：punkpeye/awesome-mcp-servers 没有变化"
 
-      - name: Sync wong2/awesome-mcp-servers
+      - name: Sync wong2/awesome-mcp-servers (同步 wong2/awesome-mcp-servers)
         run: |
-          rm -rf @wong2/awesome-mcp-servers
-          mkdir -p @wong2
-          git clone --depth 1 https://github.com/wong2/awesome-mcp-servers.git @wong2/awesome-mcp-servers
-          git add @wong2/awesome-mcp-servers
-          git commit -m "chore: sync wong2/awesome-mcp-servers repository to @wong2/awesome-mcp-servers" || echo "No changes to commit for wong2/awesome-mcp-servers"
+          TARGET_DIR="@wong2/awesome-mcp-servers"
+          echo "同步 wong2/awesome-mcp-servers 到 $TARGET_DIR"
+          rm -rf "$TARGET_DIR"
+          mkdir -p "$(dirname "$TARGET_DIR")"
+          git clone --depth 1 https://github.com/wong2/awesome-mcp-servers.git "$TARGET_DIR"
+          # 删除克隆仓库的 .git 目录
+          rm -rf "$TARGET_DIR/.git"
+          git add "$TARGET_DIR"
+          git commit -m "chore: 同步 wong2/awesome-mcp-servers 仓库内容到 $TARGET_DIR" || echo "无需提交：wong2/awesome-mcp-servers 没有变化"
 
-      - name: Sync appcypher/awesome-mcp-servers
+      - name: Sync appcypher/awesome-mcp-servers (同步 appcypher/awesome-mcp-servers)
         run: |
-          rm -rf @appcypher/awesome-mcp-servers
-          mkdir -p @appcypher
-          git clone --depth 1 https://github.com/appcypher/awesome-mcp-servers.git @appcypher/awesome-mcp-servers
-          git add @appcypher/awesome-mcp-servers
-          git commit -m "chore: sync appcypher/awesome-mcp-servers repository to @appcypher/awesome-mcp-servers" || echo "No changes to commit for appcypher/awesome-mcp-servers"
+          TARGET_DIR="@appcypher/awesome-mcp-servers"
+          echo "同步 appcypher/awesome-mcp-servers 到 $TARGET_DIR"
+          rm -rf "$TARGET_DIR"
+          mkdir -p "$(dirname "$TARGET_DIR")"
+          git clone --depth 1 https://github.com/appcypher/awesome-mcp-servers.git "$TARGET_DIR"
+          # 删除克隆仓库的 .git 目录
+          rm -rf "$TARGET_DIR/.git"
+          git add "$TARGET_DIR"
+          git commit -m "chore: 同步 appcypher/awesome-mcp-servers 仓库内容到 $TARGET_DIR" || echo "无需提交：appcypher/awesome-mcp-servers 没有变化"
 
-      - name: Git Push
+      - name: Git Push (推送更改)
         run: |
-          # 确保远程 URL 设置正确
+          # 检查是否有待推送的提交 (可选，但更健壮)
+          # git diff --quiet HEAD^ HEAD || git push origin HEAD:${{ github.ref_name }}
+          # 或者简单地尝试推送，如果没变化，push 命令本身通常也不会做任何事或报错（取决于 Git 版本和配置）
+
+          # 确保远程 URL 配置正确，包含 PAT 以进行认证
           git remote set-url origin https://x-access-token:${{ secrets.PAT }}@github.com/${{ github.repository }}.git
-          # 推送到当前分支（通常是 main）
+          # 推送到当前触发工作流的分支 (通常是 main)
+          # HEAD 指向当前的 commit，${{ github.ref_name }} 是当前分支名
           git push origin HEAD:${{ github.ref_name }}
-        # 添加一个条件，只有在有提交时才推送，避免空推送错误（虽然当前逻辑下 commit 失败会阻止 push）
-        # 但更明确的做法是检查是否有待推送的提交
-        # if: steps.*.outputs.committed == 'true' # 这需要更复杂的逻辑来检查 commit 是否真的发生了
-        # 简单的做法是依赖 commit 失败时的 || echo，如果 push 失败则日志会显示
-
+        # 可以添加条件，仅在有提交时才推送，但这需要更复杂的逻辑来跟踪是否有 commit 成功
+        # 依赖于 commit 步骤中的 || echo ... 已经能处理大部分情况，push 失败会显示在日志中
