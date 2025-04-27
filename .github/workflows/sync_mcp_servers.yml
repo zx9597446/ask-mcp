@@ -11,17 +11,23 @@ jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout main repository
-        uses: actions/checkout@v4
-      - name: Checkout external repository
-        uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v3
         with:
-          repository: modelcontextprotocol/servers
-          path: '@modelcontextprotocol.servers'
-      - name: Commit and push changes
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Set up Git
         run: |
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git config --global user.name "github-actions[bot]"
-          git add @modelcontextprotocol.servers
-          git commit -m "chore: sync external repository to subdirectory" || echo "No changes to commit"
+          git config user.name "GitHub Actions Bot"
+          git config user.email "<>"
+      - name: Sync awesome-mcp-servers
+        run: |
+          git submodule add https://github.com/punkpeye/awesome-mcp-servers.git .punkpeye/awesome-mcp-servers
+          cd .punkpeye/awesome-mcp-servers
+          git fetch --all
+          git reset --hard origin/main
+          cd ../..
+          git add .punkpeye/awesome-mcp-servers
+          git commit -m "chore: sync awesome-mcp-servers repository to subdirectory"
           git push
+      - name: Git Push
+        run: git push
