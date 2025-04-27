@@ -1,0 +1,6 @@
+[submodule "servers"]
+	path = servers
+	url = https://github.com/modelcontextprotocol/servers
+[submodule "awesome-mcp-servers"]
+	path = awesome-mcp-servers
+	url = https://github.com/punkpeye/awesome-mcp-servers
