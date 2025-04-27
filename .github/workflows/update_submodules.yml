@@ -1,0 +1,32 @@
+name: Update Submodules
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+  update-submodules:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - name: Update submodules
+        run: |
+          git submodule update --init --recursive
+          git submodule foreach --recursive git pull origin main
+          git add .
+          if ! git diff-index --quiet HEAD --; then
+            echo "Submodules changed."
+            git config --global user.name 'github-actions[bot]'
+            git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+            git commit -am "chore: update submodules [skip ci]"
+            git push
+          else
+            echo "No submodule changes."
+          fi
