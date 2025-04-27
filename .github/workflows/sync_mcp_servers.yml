@@ -14,46 +14,62 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
+          # 使用 PAT 检出，以便后续可以推送
           token: ${{ secrets.PAT }}
-      
+
       - name: Set up Git
         run: |
           git config user.name "GitHub Actions Bot"
-          git config user.email "<>"
-      
+          # 建议不要在公共代码中留空邮箱，即使是 Actions
+          # 可以使用 GitHub Actions 提供的默认邮箱
+          git config user.email "actions@github.com"
+
       - name: Sync modelcontextprotocol/servers
         run: |
-          rm -rf .modelcontextprotocol/servers
-          mkdir -p .modelcontextprotocol
-          git clone https://github.com/modelcontextprotocol/servers.git .modelcontextprotocol/servers
-          git add .modelcontextprotocol/servers
-          git commit -m "chore: sync modelcontextprotocol/servers repository" || echo "No changes to commit"
+          # 删除旧目录（如果存在）
+          rm -rf @modelcontextprotocol/servers
+          # 创建父目录
+          mkdir -p @modelcontextprotocol
+          # 克隆到新路径
+          git clone --depth 1 https://github.com/modelcontextprotocol/servers.git @modelcontextprotocol/servers
+          # 添加新路径
+          git add @modelcontextprotocol/servers
+          # 提交（如果 add 成功且有变化）
+          git commit -m "chore: sync modelcontextprotocol/servers repository to @modelcontextprotocol/servers" || echo "No changes to commit for modelcontextprotocol/servers"
 
       - name: Sync punkpeye/awesome-mcp-servers
         run: |
-          rm -rf .punkpeye/awesome-mcp-servers
-          mkdir -p .punkpeye
-          git clone https://github.com/punkpeye/awesome-mcp-servers.git .punkpeye/awesome-mcp-servers
-          git add .punkpeye/awesome-mcp-servers
-          git commit -m "chore: sync punkpeye/awesome-mcp-servers repository" || echo "No changes to commit"
+          rm -rf @punkpeye/awesome-mcp-servers
+          mkdir -p @punkpeye
+          # 添加 --depth 1 可以加快克隆速度，如果不需要完整历史记录
+          git clone --depth 1 https://github.com/punkpeye/awesome-mcp-servers.git @punkpeye/awesome-mcp-servers
+          git add @punkpeye/awesome-mcp-servers
+          git commit -m "chore: sync punkpeye/awesome-mcp-servers repository to @punkpeye/awesome-mcp-servers" || echo "No changes to commit for punkpeye/awesome-mcp-servers"
 
       - name: Sync wong2/awesome-mcp-servers
         run: |
-          rm -rf .wong2/awesome-mcp-servers
-          mkdir -p .wong2
-          git clone https://github.com/wong2/awesome-mcp-servers.git .wong2/awesome-mcp-servers
-          git add .wong2/awesome-mcp-servers
-          git commit -m "chore: sync wong2/awesome-mcp-servers repository" || echo "No changes to commit"
+          rm -rf @wong2/awesome-mcp-servers
+          mkdir -p @wong2
+          git clone --depth 1 https://github.com/wong2/awesome-mcp-servers.git @wong2/awesome-mcp-servers
+          git add @wong2/awesome-mcp-servers
+          git commit -m "chore: sync wong2/awesome-mcp-servers repository to @wong2/awesome-mcp-servers" || echo "No changes to commit for wong2/awesome-mcp-servers"
 
       - name: Sync appcypher/awesome-mcp-servers
         run: |
-          rm -rf .appcypher/awesome-mcp-servers
-          mkdir -p .appcypher
-          git clone https://github.com/appcypher/awesome-mcp-servers.git .appcypher/awesome-mcp-servers
-          git add .appcypher/awesome-mcp-servers
-          git commit -m "chore: sync appcypher/awesome-mcp-servers repository" || echo "No changes to commit"
+          rm -rf @appcypher/awesome-mcp-servers
+          mkdir -p @appcypher
+          git clone --depth 1 https://github.com/appcypher/awesome-mcp-servers.git @appcypher/awesome-mcp-servers
+          git add @appcypher/awesome-mcp-servers
+          git commit -m "chore: sync appcypher/awesome-mcp-servers repository to @appcypher/awesome-mcp-servers" || echo "No changes to commit for appcypher/awesome-mcp-servers"
 
       - name: Git Push
         run: |
-          git remote set-url origin https://x-access-token:${{ secrets.PAT }}@github.com/zx9597446/ask-mcp.git
-          git push
+          # 确保远程 URL 设置正确
+          git remote set-url origin https://x-access-token:${{ secrets.PAT }}@github.com/${{ github.repository }}.git
+          # 推送到当前分支（通常是 main）
+          git push origin HEAD:${{ github.ref_name }}
+        # 添加一个条件，只有在有提交时才推送，避免空推送错误（虽然当前逻辑下 commit 失败会阻止 push）
+        # 但更明确的做法是检查是否有待推送的提交
+        # if: steps.*.outputs.committed == 'true' # 这需要更复杂的逻辑来检查 commit 是否真的发生了
+        # 简单的做法是依赖 commit 失败时的 || echo，如果 push 失败则日志会显示
+
