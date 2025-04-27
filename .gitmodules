@@ -4,3 +4,6 @@
 [submodule "awesome-mcp-servers"]
 	path = awesome-mcp-servers
 	url = https://github.com/punkpeye/awesome-mcp-servers
+[submodule "awesome-mcp-servers2"]
+	path = awesome-mcp-servers2
+	url = https://github.com/appcypher/awesome-mcp-servers
