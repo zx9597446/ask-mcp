@@ -199,6 +199,7 @@ Web 内容访问和自动化功能。支持以 AI 友好格式搜索、抓取和
 - [OpenDataMCP/OpenDataMCP](https://github.com/OpenDataMCP/OpenDataMCP) 🐍☁️ - 使用模型上下文协议将任何开放数据连接到任何 LLM。
 - [tinybirdco/mcp-tinybird](https://github.com/tinybirdco/mcp-tinybird) 🐍☁️ - MCP 服务器可从任何 MCP 客户端与 Tinybird Workspace 进行交互。
 - [@iaptic/mcp-server-iaptic](https://github.com/iaptic/mcp-server-iaptic) 🎖️ 📇 ☁️ - 连接 [iaptic](https://www.iaptic.com) 平台，让您轻松查询客户购买记录、交易数据以及应用营收统计信息。
+- [@antv/mcp-server-chart](https://github.com/antvis/mcp-server-chart) 🎖️ 📇 ☁️ - 一个基于 [AntV](https://github.com/antvis) 生成数据可视化图表的 MCP Server 插件。
 
 ### 🗄️ <a name="databases"></a>数据库
 
@@ -354,6 +355,7 @@ Web 内容访问和自动化功能。支持以 AI 友好格式搜索、抓取和
 - [pwh-pwh/coin-mcp-server](https://github.com/pwh-pwh/coin-mcp-server) 🐍 ☁️ -  使用 Bitget 公共 API 去获取加密货币最新价格
 - [HuggingAGI/mcp-baostock-server](https://github.com/HuggingAGI/mcp-baostock-server) 🐍 ☁️ - 基于 baostock 的 MCP 服务器,提供对中国股票市场数据的访问和分析功能。
 - [Wuye-AI/mcp-server-wuye-ai](https://github.com/wuye-ai/mcp-server-wuye-ai) 🎖️ 📇 ☁️ - 接入 CRIC物业AI 平台的 MCP 服务器。CRIC物业AI 是克而瑞专为物业行业打造的智能 AI 助理。
+- [zlinzzzz/finData-mcp-server](https://github.com/zlinzzzz/finData-mcp-server) 🐍 ☁️ -  一个获取专业级金融数据的MCP服务器，支持Tushare等多种数据供应商。
 
 ### 🎮 <a name="gaming"></a>游戏
 
