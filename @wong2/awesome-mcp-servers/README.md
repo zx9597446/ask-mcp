@@ -84,6 +84,7 @@ Official integrations are maintained by companies building production ready MCP 
 - **[Fireproof](https://github.com/fireproof-storage/mcp-database-server)** - Immutable ledger database with live synchronization
 - **[GitHub](https://github.com/github/github-mcp-server)** - GitHub's official MCP Server
 - **[Gitee](https://github.com/oschina/mcp-gitee)** - Gitee API integration, repository, issue, and pull request management, and more.
+- **[Globalping](https://github.com/jsdelivr/globalping-mcp-server)** - Network access with the ability to run commands like ping, traceroute, mtr, http, dns resolve.
 - **[gotoHuman](https://github.com/gotohuman/gotohuman-mcp-server)** - Human-in-the-loop platform - Allow AI agents and automations to send requests for approval to your [gotoHuman](https://www.gotohuman.com) inbox.
 - **[Grafana](https://github.com/grafana/mcp-grafana)** - Search dashboards, investigate incidents and query datasources in your Grafana instance
 - **[Graphlit](https://github.com/graphlit/graphlit-mcp-server)** - Ingest anything from Slack to Gmail to podcast feeds, in addition to web crawling, into a searchable [Graphlit](https://www.graphlit.com) project.
@@ -138,6 +139,7 @@ Official integrations are maintained by companies building production ready MCP 
 - **[RAD Security](https://github.com/rad-security/mcp-server)** - Interact with the RAD Security platform which provides AI-powered security insights for Kubernetes and cloud environments.
 - **[Ramp](https://github.com/ramp-public/ramp-mcp)** - Interact with [Ramp](https://ramp.com)'s Developer API to run analysis on your spend and gain insights leveraging LLMs
 - **[Raygun](https://github.com/MindscapeHQ/mcp-server-raygun)** - Interact with your crash reporting and real using monitoring data on your Raygun account
+- **[Reexpress](https://github.com/ReexpressAI/reexpress_mcp_server)** - Enable Similarity-Distance-Magnitude statistical verification for your search, software, and data science workflows
 - **[Rember](https://github.com/rember/rember-mcp)** - Create spaced repetition flashcards in [Rember](https://rember.com) to remember anything you learn in your chats
 - **[Riza](https://github.com/riza-io/riza-mcp)** - Arbitrary code execution and tool-use platform for LLMs by [Riza](https://riza.io)
 - **[Root Signals](https://github.com/root-signals/root-signals-mcp)** - Equip AI agents with evaluation and self-improvement capabilities with [Root Signals](https://www.rootsignals.ai/)
@@ -159,6 +161,7 @@ Official integrations are maintained by companies building production ready MCP 
 - **[Thirdweb](https://github.com/thirdweb-dev/ai/tree/main/python/thirdweb-mcp)** - Read/write to over 2k blockchains, enabling data querying, contract analysis/deployment, and transaction execution, powered by [Thirdweb](https://thirdweb.com/)
 - **[Tinybird](https://github.com/tinybirdco/mcp-tinybird)** - Interact with Tinybird serverless ClickHouse platform
 - **[Tldv](https://gitlab.com/tldv/tldv-mcp-server)** - Connect your AI agents to Google-Meet, Zoom & Microsoft Teams through [tl;dv](https://tldv.io)
+- **[Trade Agent](https://github.com/Trade-Agent/trade-agent-mcp)** - Execute stock and crypto trades via [Trade Agent](https://thetradeagent.ai/)
 - **[Twilio](https://github.com/twilio-labs/mcp)** - Interact with [Twilio](https://www.twilio.com/en-us) APIs to send messages, manage phone numbers, configure your account, and more.
 - **[UnifAI](https://github.com/unifai-network/unifai-mcp-server)** - Dynamically search and call tools using [UnifAI Network](https://unifai.network)
 - **[Unstructured](https://github.com/Unstructured-IO/UNS-MCP)** - Set up and interact with your unstructured data processing workflows in [Unstructured Platform](https://unstructured.io)
@@ -250,6 +253,7 @@ A growing set of community-developed and maintained servers demonstrates various
 - **[Microsoft 365](https://github.com/softeria/ms-365-mcp-server)** 📇 ☁️ - MCP server that connects to the whole Microsoft 365 suite using Graph API (including mail, files, Excel, calendar)
 - **[Microsoft Entra ID MCP Server](https://github.com/hieuttmmo/entraid-mcp-server)** - A Python MCP server for Microsoft Entra ID (Azure AD) directory, user, group, device, sign-in, and security operations via Microsoft Graph.
 - **[MCP Aggregator](https://github.com/nazar256/combine-mcp)** - An MCP (Model Context Protocol) aggregator that allows you to combine multiple MCP servers into a single endpoint allowing to filter specific tools.
+- **[MCP-CLI Adapter](https://github.com/inercia/mcp-cli-adapter)** - Use command line tools in a secure fashion as MCP tools.
 - **[MCP Expr Lang](https://github.com/ivan-saorin/mcp-expr-lang)** - MCP Expr-Lang provides a seamless integration between Claude AI and the powerful expr-lang expression evaluation engine.
 - **[MCP Installer](https://github.com/anaisbetts/mcp-installer)** - Set up MCP servers in Claude Desktop
 - **[mcp-k8s-go](https://github.com/strowk/mcp-k8s-go)** - Golang-based Kubernetes MCP Server. Built to be extensible.
